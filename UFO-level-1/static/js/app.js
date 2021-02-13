@@ -1,48 +1,32 @@
-// from data.js
+// kcharlesr
+
+
+
 var tableData = data;
 
-//table references
-var tbody = d3.select("tbody");
 
-// Building Functions for the table
-  // Build the table
-function buildTable(data) {
-  // Clean out everything
-  tbody.html("");
-
-  // Loops
-    // Data loop
-  data.forEach((dataRow) => {
-    var row = tbody.append("tr");
-    // Table Cell Loop
-    Object.values(dataRow).forEach((val) => {
-      var cell = row.append("td");
-        cell.text(val);
-      }
-    );
-  });
+function appendTable(data) {
+    d3.select("tbody").html("");
+    data.forEach((selection) => {
+        var tableRow = d3.select("tbody").append("tr");
+        Object.values(selection).forEach((value) => {
+            var tableData = tableRow.append("td");
+            tableData.text(value);
+        });
+    })
 }
 
-  // Click function
-function handleClick() {
+appendTable(tableData);
 
-  // Date and Time
-  var date = d3.select("#datetime").property("value");
-  let filteredData = tableData;
 
-  // Filter
-  if (date) {
-    filteredData = filteredData.filter(row => row.datetime === date);
-  }
-
-  buildTable(filteredData);
+function clickEvent() {
+    d3.event.preventDefault();
+    var date = d3.select("#datetime").property("value");
+    var filterDateTime = tableData;
+    if (date) {
+        filterDateTime = filterDateTime.filter((row) => row.datetime === date);
+    }
+    appendTable(filterDateTime);
 }
 
-// Filter with button press
-d3.selectAll("#filter-btn").on("click", handleClick);
-
-// Build Table
-buildTable(tableData);
-
-// testing for github ssh--change the file
-
+d3.selectAll("#filter-btn").on("click", clickEvent);
