@@ -1,49 +1,53 @@
-// kcharlesr
+//kcharlesr
 
 
 
-/ from data.js
+// from data.js
 var tableData = data;
-
-//table references
 var tbody = d3.select("tbody");
 
-// Building Functions for the table
-  // Build the table
-function buildTable(data) {
-  // Clean out everything
-  tbody.html("");
+// display table and data
 
-  // Loops
-    // Data loop
-  data.forEach((dataRow) => {
-    var row = tbody.append("tr");
-    // Table Cell Loop
-    Object.values(dataRow).forEach((val) => {
-      var cell = row.append("td");
-        cell.text(val);
-      }
-    );
-  });
-}
+tableData.forEach((report) =>   {
+    console.log(report);
+    var row = tbody.append('tr');
 
-  // Click function
-function handleClick() {
+    Object.entries(report).forEach(([key, value]) => {
+        console.log(key, value);
+        var cell = row.append('td');
+        cell.text(value);
+                                    });
+                                });
 
-  // Date and Time
-  var date = d3.select("#datetime").property("value");
-  let filteredData = tableData;
+// select button
+var clickHandler = d3.select("#filter-btn");
+                                           
+//event
+clickHandler.on("click", function() {
 
-  // Filter
-  if (date) {
-    filteredData = filteredData.filter(row => row.datetime === date);
-  }
+//delete
+d3.select("tbody").html("");
 
-  buildTable(filteredData);
-}
+//stop page from refreshing
+d3.event.preventDefault();
 
-// Filter with button press
-d3.selectAll("#filter-btn").on("click", handleClick);
+// take input znd store as a var
+var dateTime = d3.select("#datetime").property("value");
+console.log(dateTime);
 
-// Build Table
-buildTable(tableData);
+// filter records
+var filteredData = tableData.filter(record => record.datetime === dateTime);
+console.log(filteredData);
+
+// display results of search
+filteredData.forEach((report) => {
+    var row = tbody.append('tr');
+
+    Object.entries(report).forEach(([key, value]) => {
+        console.log(key, value);
+        var cell = row.append('td');
+        cell.text(value);
+    });
+});
+
+});
