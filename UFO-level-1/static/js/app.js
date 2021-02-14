@@ -47,7 +47,7 @@ filteredData.forEach((report) => {
         console.log(key, value);
         var cell = row.append('td');
         cell.text(value);
-    });
-});
+                                    });
+                                });
 
-});
+                            });
